@@ -8,4 +8,6 @@ import Input from "./Input";
 import Button from "./Button";
 import Select from "./Select";
 import Card from "./Card";
-export { Card, Footer, Header, Loader, Container, Logoutbtn, Logo, Input, Button, Select }
+import Login from "./Login";
+import Signup from "./Signup";
+export { Card, Footer, Header, Loader, Container, Logoutbtn, Signup, Logo, Input, Button, Select, Login }
