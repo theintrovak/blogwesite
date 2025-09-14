@@ -10,4 +10,6 @@ import Select from "./Select";
 import Card from "./Card";
 import Login from "./Login";
 import Signup from "./Signup";
-export { Card, Footer, Header, Loader, Container, Logoutbtn, Signup, Logo, Input, Button, Select, Login }
+import Protected from "./Auth";
+import Rte from "./Rte";
+export { Rte, Protected, Card, Footer, Header, Loader, Container, Logoutbtn, Signup, Logo, Input, Button, Select, Login }

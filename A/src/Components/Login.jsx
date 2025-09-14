@@ -12,6 +12,7 @@ function LoginBox() {
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm()
     const [error, setError] = useState("")
     const handleLogin = async (data) => {
+        setError("")
         try {
             const session = await authservice.login(data)
             if (session) {
@@ -61,6 +62,7 @@ function LoginBox() {
                                 }
                             })} className='border border-gray-300 rounded-md p-2 w-full' />
                             <Button type='submit' disabled={isSubmitting} children={(isSubmitting) ? "Loading..." : "Login"} />
+
                         </div>
                     </form>
                 </div>
