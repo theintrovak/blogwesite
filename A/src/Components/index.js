@@ -12,4 +12,5 @@ import Login from "./Login";
 import Signup from "./Signup";
 import Protected from "./Auth";
 import Rte from "./Rte";
-export { Rte, Protected, Card, Footer, Header, Loader, Container, Logoutbtn, Signup, Logo, Input, Button, Select, Login }
+import PostForm from "./Post/Form/PostForm";
+export { PostForm, Rte, Protected, Card, Footer, Header, Loader, Container, Logoutbtn, Signup, Logo, Input, Button, Select, Login }
