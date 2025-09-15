@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import services from '../../../Appwrite/config'
 
+
 function PostForm() {
     const { register, handleSubmit, watch, setValue, control, getValues } = useForm(
         {
@@ -78,7 +79,7 @@ function PostForm() {
                         setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
                     }}
                 />
-                <RTE label="Content :" name="content" control={control} defaultValue={getValues("content")} />
+                <Rte label="Content :" name="content" control={control} defaultValue={getValues("content")} />
             </div>
             <div className="w-1/3 px-2">
                 <Input
