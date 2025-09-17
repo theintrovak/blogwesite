@@ -2,22 +2,49 @@ import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import authservice from './Appwrite/Auth'
 import './App.css'
-import { Loader } from './Components/Loader'
+import { Footer, Header, Loader } from './Components'
+import { login, logout } from './Store/authSlice'
+import { Outlet } from 'react-router-dom'
 
 function App() {
   const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
   useEffect(() => {
-    authservice.getCurrentUser().then((userData) => {
-      (userData) ? dispatch(login({ userData })) : dispatch(logout())
-    }).finally(() => setLoading(false))
-      (!loading) ? <Loader /> : null
-  }, [])
-  return (
-    <>
-      <h1>test</h1>
-    </>
-  )
+    const init = async () => {
+      try {
+        // 🔹 Just check if user is already logged in
+        const userData = await authservice.getCurrentUser();
+
+
+        if (userData) {
+          dispatch(login(userData));
+        } else {
+          dispatch(logout()); // no session → guest mode
+        }
+      } catch (err) {
+        if (err.code === 401) {
+          console.log("User not found.");
+        }
+
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    init();
+  }, [dispatch]);
+  if (loading) return <Loader />
+  else return (
+    <div className='min-h-screen flex flex-wrap content-between bg-gray-400'>
+      <div className='w-full block' >
+        <Header />
+        <main>
+          <Outlet />
+        </main>
+        <Footer />
+      </div>
+    </div>
+  );
 }
 
 export default App

@@ -10,26 +10,36 @@ import { useForm } from 'react-hook-form'
 function Signup() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const { register, handleSubmit } = useForm()
+    const { register, handleSubmit, formState: { isSubmitting } } = useForm()
     const [error, setError] = useState("")
     const handleSignup = async (data) => {
         setError("")
         try {
-            const session = await authservice.signup(data)
-            if (session) {
+            const user = await authservice.createAccount({
+                email: data.email,
+                password: data.password,
+                name: data.name,
+            })
+            console.log("user means account created " + user);
+
+            if (user) {
                 const userData = await authservice.getCurrentUser()
+                console.log("user data means account created and current user is fetched" + userData);
                 if (userData) {
-                    dispatch(login({ userData }))
+                    dispatch(login(userData))
                     navigate("/")
+                    console.log("login successful");
                 }
             }
         } catch (err) {
             setError(err?.message || "Something went wrong")
+            console.log("error in login");
+
         }
     }
     return (
-        <div className="flex items-center justify-center">
-            <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
+        <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 lg:py-16 bg-gradient-to-t from-[#ff0606] to-[#101828] ">
+            <div className={`mx-auto w-full max-w-lg bg-[#ffffff33] rounded-xl p-10 border border-black/10`}>
                 <div className="mb-2 flex justify-center">
                     <span className="inline-block w-full max-w-[100px]">
                         <Logo width="100%" />
@@ -40,7 +50,7 @@ function Signup() {
                     Already have an account?&nbsp;
                     <Link
                         to="/login"
-                        className="font-medium text-primary transition-all duration-200 hover:underline"
+                        className="font-medium text-blue-600 transition-all duration-200 hover:underline"
                     >
                         Sign In
                     </Link>
@@ -48,7 +58,9 @@ function Signup() {
                 {error && <p className="mt-2 text-center text-base text-red-600">{error}
                 </p>}
                 <form onSubmit={handleSubmit(handleSignup)} className="mt-8">
-                    <Input label="Name" {...register("name")} />
+                    <Input label="Name"
+                        placeholder="Enter your name"
+                        {...register("name")} />
                     <Input
                         type="email"
                         placeholder='Enter your email'
@@ -67,11 +79,11 @@ function Signup() {
                     <Input type="password" placeholder='Enter your password' label='Password: ' {...register("password", {
                         required: "Password is required",
                         pattern: {
-                            value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~])[A-Za-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]{8,64}$/,
+                            value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
                             message: "Password is Invalid"
                         }
                     })} className='border border-gray-300 rounded-md p-2 w-full' />
-                    <Button type="submit" className='w-full bg-blue-500 hover:bg-blue-600' children={"Sign Up"} />
+                    <Button type="submit" className='w-full mt-5  hover:bg-amber-600' disabled={isSubmitting} children={(isSubmitting) ? "Signing Up..." : "Sign Up"} />
                 </form>
             </div>
         </div>

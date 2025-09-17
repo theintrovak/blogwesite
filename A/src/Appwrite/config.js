@@ -16,7 +16,7 @@ export class Services {
             return await this.Databases.createDocument(
                 Conf.appwritedatabaseid
                 , Conf.appwritecollectionid
-                , slug,
+                , ID.unique(),
                 {
                     title,
                     content,

@@ -11,11 +11,17 @@ export class AuthService {
     }
     async createAccount({ email, password, name }) {
         try {
-            const userAccount = await this.account.create({ userId: ID.unique(), email, password, name });
+            const userAccount = await this.account.create(
+                ID.unique(),
+                email,
+                password,
+                name
+            );
             if (userAccount) {
                 this.login({ email, password })
-            } else {
                 return userAccount
+            } else {
+                return null
             }
 
         } catch (error) {
@@ -33,9 +39,18 @@ export class AuthService {
     }
     async getCurrentUser() {
         try {
-            return this.account.get();
+            const user = await this.account.get();
+            return user
         } catch (error) {
-            throw error
+            if (error.code === 401) {
+                // Handle unauthorized user case
+                console.log("User not authenticated. Returning null.");
+                return null; // return null for unauthorized users
+            } else {
+                // If it's another error, throw it to handle elsewhere
+                console.log("Appwrite service :: getCurrentUser :: error", error);
+                throw error;
+            }
         }
     }
     async logout() {

@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form'
 function LoginBox() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm()
+    const { register, handleSubmit, formState: { isSubmitting } } = useForm()
     const [error, setError] = useState("")
     const handleLogin = async (data) => {
         setError("")
@@ -57,7 +57,7 @@ function LoginBox() {
                             <Input type="password" placeholder='Enter your password' label='Password: ' {...register("password", {
                                 required: "Password is required",
                                 pattern: {
-                                    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~])[A-Za-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]{8,64}$/,
+                                    value: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
                                     message: "Password is Invalid"
                                 }
                             })} className='border border-gray-300 rounded-md p-2 w-full' />

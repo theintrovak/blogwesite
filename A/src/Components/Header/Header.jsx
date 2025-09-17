@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 
 
 function Header() {
-    const authStatus = useSelector((state) => state.auth.status);
+    const authStatus = useSelector((state) => state?.auth?.status);
     const navigate = useNavigate();
     const navitems = [
         {
@@ -32,51 +32,47 @@ function Header() {
 
         },
         {
-            name: 'all Post',
-            slug: '/posts',
+            name: 'all-posts',
+            slug: '/all-posts',
             active: authStatus
         }, {
             name: 'login',
             slug: '/login',
             active: !authStatus
         },
-        {
-            name: 'logout',
-            slug: '/logout',
-            active: authStatus
-        }, {
-            name: 'singup',
-            slug: '/singup',
+        , {
+            name: 'SignUp',
+            slug: '/SignUp',
             active: !authStatus
         }
     ]
     return (
 
-        <header className='bg-gray-900'>
-            <Container>
-                <div className='flex items-center justify-between py-4'>
-                    <Logo />
-                    <nav className='flex items-center space-x-4'>
-                        <div className='flex items-center space-x-4'>
-                            <Link to='/' className='text-white hover:text-gray-400' ><Logo /></Link>
-                            <div className='flex items-center'>
-                                <ul className='flex items-center'>
-                                    {
-                                        navitems.map((item) =>
-                                            (item.active) ? <li key={item.name} className='text-gray-200'>
-                                                <button className='text-white hover:text-gray-400' onClick={() => navigate(item.slug)} >
-                                                    {item.name}</button></li> : null
-                                        )
+        <header className='bg-gray-900  border-none '>
 
-                                    }
-                                    {authStatus && <li><Logoutbtn /></li>}
+            <div className='flex items-center justify-between py-4'>
+                <Link to='/' className='text-white  hover:text-gray-400' ><Logo /></Link>
+                <nav className='flex items-center space-x-4'>
+                    <div className='flex items-center space-x-4'>
 
-                                </ul>
-                            </div>
+                        <div className='flex items-center'>
+                            <ul className='flex items-center'>
+                                {
+                                    navitems.map((item) =>
+                                        (item.active) ? <li key={item.name} className='text-gray-200 py-3 px-3  bg-amber-400 hover:bg-amber-600 rounded-2xl flex mx-1 '>
+                                            <button className='text-white hover:text-gray-400 ' onClick={() => navigate(item.slug)} >
+                                                {item.name}</button></li> : null
+                                    )
+
+                                }
+                                {authStatus && <li><Logoutbtn /></li>}
+
+                            </ul>
                         </div>
-                    </nav>
-                </div>
-            </Container>
+                    </div>
+                </nav>
+            </div>
+
         </header>
     )
 }
