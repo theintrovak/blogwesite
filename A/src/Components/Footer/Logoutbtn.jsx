@@ -2,6 +2,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { logout } from '../../Store/authSlice'
 import authservice from '../../Appwrite/Auth'
+import { Button, buttonVariants } from '../ui/button'
 
 function Logoutbtn() {
     const dispatch = useDispatch()
@@ -11,10 +12,7 @@ function Logoutbtn() {
         })
     }
     return (
-        <button
-            onClick={logoutHandler}
-            className='bg-red-500 hover:bg-red-700 text-black font-bold py-2 px-4 rounded'
-        >Logout</button>
+        Button({ onClick: logoutHandler, className: buttonVariants({ variant: "destructive" }), children: "Logout" })
     )
 }
 

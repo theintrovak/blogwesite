@@ -6,7 +6,7 @@ import { Protected, Login, } from './Components/index.js'
 import store from './Store/store.js'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { AddPost, AllPosts, EditPost, Home, Post, SignUp } from './Pages/index.js'
+import { About, AddPost, AllPosts, Contact, EditPost, Home, Post, SignUp } from './Pages/index.js'
 const router = createBrowserRouter([{
   path: "/",
   element: <App />,
@@ -55,6 +55,22 @@ const router = createBrowserRouter([{
     path: "/post/:slug",
     element: (
       <Post />
+    ),
+  }, {
+    path: "/contact",
+    element: (
+      <Protected >
+        {" "}
+        <Contact />
+      </Protected>
+    ),
+  }, {
+    path: "/about",
+    element: (
+      <Protected >
+        {" "}
+        <About />
+      </Protected>
     ),
   }
   ]

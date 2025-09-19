@@ -12,10 +12,12 @@ function AllPosts() {
     })
     return (
         <div>
-            <Container>
-                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
+            <Container >
+                <div className='grid overflow-auto  grid-cols-1 grid-rows-2 md:grid-row-3 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-4 gap-4 '>
                     {posts.map((post) => (
-                        <div key={post.$id} >
+                        <div key={post.$id}
+                            className='mt-4    h-20 w-20   lg:h-40 lg:w-40 hover:scale-105 transition duration-300 ease-in-out'
+                        >
                             <Card {...post} />
                         </div>
                     ))}

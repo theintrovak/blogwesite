@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom'
 
 function Footer() {
     return (
-        <footer className="bg-[#ff0606] border-none text-black py-10">
+        <footer className="bg-white border-none text-black py-10">
             {/* Container */}
-            <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-1 gap-8">
 
                 {/* Left section */}
                 <div>
                     <h2 className="text-2xl font-bold text-white">MyWebsite</h2>
-                    <p className="mt-3 text-gray-400">
+                    <p className="mt-3 text-black">
                         Building modern web apps with clean and simple designs.
                     </p>
                 </div>

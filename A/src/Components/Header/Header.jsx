@@ -1,13 +1,20 @@
-import React from 'react'
-import { Container, Logoutbtn, Logo } from '../index'
+import React, { useState } from 'react'
+import { Button } from '../ui/button'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { Menu, X } from "lucide-react"
+import Logo from '../Logo'
+
+
 
 
 function Header() {
     const authStatus = useSelector((state) => state?.auth?.status);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+    const [activeslug, setActiveslug] = useState(null)
     const navigate = useNavigate();
+
     const navitems = [
         {
             name: 'Home',
@@ -28,7 +35,7 @@ function Header() {
         {
             name: 'contact',
             slug: '/contact',
-            active: authStatus
+            active: true
 
         },
         {
@@ -48,32 +55,65 @@ function Header() {
     ]
     return (
 
-        <header className='bg-gray-900  border-none '>
+        <header className="w-full border-none sticky top-0 bg-white shadow-sm">
+            <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-2">
 
-            <div className='flex items-center justify-between py-4'>
-                <Link to='/' className='text-white  hover:text-gray-400' ><Logo /></Link>
-                <nav className='flex items-center space-x-4'>
-                    <div className='flex items-center space-x-4'>
+                {/* Logo / Brand */}
+                <div>
+                    <Logo />
+                </div>
 
-                        <div className='flex items-center'>
-                            <ul className='flex items-center'>
-                                {
-                                    navitems.map((item) =>
-                                        (item.active) ? <li key={item.name} className='text-gray-200 py-3 px-3  bg-amber-400 hover:bg-amber-600 rounded-2xl flex mx-1 '>
-                                            <button className='text-white hover:text-gray-400 ' onClick={() => navigate(item.slug)} >
-                                                {item.name}</button></li> : null
-                                    )
+                {/* Desktop Nav */}
 
-                                }
-                                {authStatus && <li><Logoutbtn /></li>}
+                <ul className='hidden md:flex space-x-3'>
+                    {
+                        navitems.map((item) => (
+                            (item.active) ?
+                                <li key={item.slug}>
+                                    <Button onClick={() => { setActiveslug(item.slug); navigate(item.slug) }} variant="link" className={(item.slug === activeslug) ? "block py-1 px-3 rounded  bg-[#10A4B0] pb" : "block py-1 px-3rounded bg-[#ffffff] hover:bg-[#10A4B0]"}>
+                                        {item.name}
+                                    </Button>
+                                </li> : null
+                        ))
+                    }
 
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
+                </ul>
+
+
+                {/* Right Section */}
+                <div className="hidden md:flex">
+                    <Button variant="default"
+                        onClick={(authStatus) ? () => navigate("/addpost") : () => navigate("/login")}>Get Started</Button>
+                </div>
+
+                {/* Mobile Menu Button */}
+                <button
+                    className="md:hidden p-2"
+                    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                >
+                    {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                </button>
             </div>
 
+            {/* Mobile Menu Dropdown */}
+            {mobileMenuOpen && (
+                <ul>
+                    {
+                        navitems.map((item) => (
+                            (item.active) ?
+                                <li key={item.slug}>
+                                    <Button onClick={() => { setActiveslug(item.slug); navigate(item.slug) }} variant="link" className={(item.slug === activeslug) ? "block py-1 px-3 rounded  bg-[#10A4B0] pb" : "block py-1 px-3rounded bg-[#ffffff] hover:bg-[#10A4B0]"}>
+                                        {item.name}
+                                    </Button>
+                                </li> : null
+
+                        ))
+                    }
+
+                </ul>
+            )}
         </header>
+
     )
 }
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import authservice from './Appwrite/Auth'
 import './App.css'
-import { Footer, Header, Loader } from './Components'
+import { Footer, Header, Loader, RouteChangeLoader } from './Components'
 import { login, logout } from './Store/authSlice'
 import { Outlet } from 'react-router-dom'
 
@@ -27,7 +27,7 @@ function App() {
         }
 
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
     };
 
@@ -37,6 +37,7 @@ function App() {
   else return (
     <div className='min-h-screen flex flex-wrap content-between bg-gray-400'>
       <div className='w-full block' >
+        <RouteChangeLoader />
         <Header />
         <main>
           <Outlet />

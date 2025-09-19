@@ -36,7 +36,7 @@ function PostForm({ post }) {
             const dbpost = await services.updatePost(post.$id, { ...postdata, featuredImage: fileid })
             console.log("post updated  ", dbpost);
             if (dbpost) {
-                navigate(`/`)
+                navigate(`/all-posts`)
             }
         } else {
             const file = await services.uploadImage(data.image[0])
